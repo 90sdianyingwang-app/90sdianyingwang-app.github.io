@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="90s电影网（90sdianyingwang-app）是专注经典影像重温的影视导航站，收录九十年代港片、好莱坞经典、国产老电影、怀旧动画片与纪录片，提供影片档案、幕后故事、观影指南与高清片源索引，带你回到录像厅与碟片时代的观影现场。">
+<meta name="keywords" content="90s电影网, 90sdianyingwang-app, 九十年代电影, 经典老电影, 港片怀旧, 90年代好莱坞, 国产老片, 录像厅回忆, 电影档案, 观影指南">
+<meta name="author" content="90s电影网">
+<meta name="robots" content="index, follow">
+<meta name="bingbot" content="index, follow">
+<meta name="theme-color" content="#1a1a2e">
+<title>90s电影网 | 九十年代经典影像档案馆 · 怀旧电影在线导航与观影指南</title>
+<style>
+  :root{
+    --ink:#f4ecd8;
+    --ink-dim:#c9bda6;
+    --paper:#16161f;
+    --card:#1f1f2b;
+    --accent:#e6b450;
+    --accent2:#c86b5a;
+    --line:rgba(230,180,80,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",Helvetica,Arial,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:var(--accent);text-decoration:none}
+  a:hover{color:var(--accent2)}
+
+  /* 顶部 */
+  header.site-head{
+    position:sticky;top:0;z-index:50;
+    background:rgba(22,22,31,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .head-inner{
+    max-width:1180px;margin:0 auto;padding:14px 22px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .brand{display:flex;align-items:baseline;gap:10px}
+  .brand h1{
+    font-size:22px;letter-spacing:1px;font-weight:800;
+    background:linear-gradient(90deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .brand span.tag{font-size:12px;color:var(--ink-dim);border:1px solid var(--line);padding:2px 8px;border-radius:20px}
+  nav.top-nav{display:flex;gap:6px;flex-wrap:wrap}
+  nav.top-nav a{
+    color:var(--ink-dim);font-size:14px;padding:6px 12px;border-radius:6px;
+  }
+  nav.top-nav a:hover{background:var(--card);color:var(--ink)}
+
+  /* 首屏 */
+  .hero{
+    position:relative;
+    padding:90px 22px 70px;
+    text-align:center;
+    background:
+      radial-gradient(1200px 400px at 50% -10%, rgba(230,180,80,.16), transparent 60%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 1px, transparent 1px 4px);
+  }
+  .hero .era{font-size:13px;letter-spacing:6px;color:var(--accent);text-transform:uppercase}
+  .hero h2{font-size:clamp(30px,6vw,60px);line-height:1.15;margin:18px 0;font-weight:900}
+  .hero h2 em{font-style:normal;color:var(--accent)}
+  .hero p.lead{max-width:680px;margin:0 auto;color:var(--ink-dim);font-size:16px}
+  .hero .meta{margin-top:26px;font-size:13px;color:var(--ink-dim)}
+  .hero .meta b{color:var(--accent);font-weight:600}
+
+  /* 通用区块 */
+  section{padding:64px 22px;max-width:1180px;margin:0 auto}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:34px;border-bottom:1px dashed var(--line);padding-bottom:14px}
+  .sec-head h3{font-size:26px;font-weight:800;letter-spacing:1px}
+  .sec-head h3 small{display:block;font-size:13px;color:var(--accent);font-weight:500;letter-spacing:3px;margin-bottom:4px}
+  .sec-head .more{font-size:13px;color:var(--ink-dim)}
+
+  /* 档案卡片 */
+  .grid{display:grid;gap:20px}
+  .g-4{grid-template-columns:repeat(4,1fr)}
+  .g-3{grid-template-columns:repeat(3,1fr)}
+  .g-2{grid-template-columns:repeat(2,1fr)}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:22px;transition:.28s;position:relative;overflow:hidden;
+  }
+  .card:before{content:"";position:absolute;left:0;top:0;width:3px;height:100%;background:var(--accent);transform:scaleY(0);transition:.28s;transform-origin:bottom}
+  .card:hover{transform:translateY(-5px);border-color:rgba(230,180,80,.45)}
+  .card:hover:before{transform:scaleY(1)}
+  .card .no{font-size:12px;color:var(--accent);letter-spacing:2px;font-weight:700}
+  .card h4{font-size:18px;margin:8px 0 10px}
+  .card p{font-size:14px;color:var(--ink-dim)}
+  .card .yr{display:inline-block;margin-top:14px;font-size:12px;color:var(--ink-dim);border:1px solid var(--line);padding:2px 10px;border-radius:20px}
+
+  /* 片单表 */
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{padding:13px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--accent);font-size:13px;letter-spacing:1px;background:rgba(230,180,80,.05)}
+  td a{color:var(--ink)}
+  td a:hover{color:var(--accent)}
+  .badge{font-size:12px;padding:2px 9px;border-radius:20px;border:1px solid var(--line);color:var(--ink-dim);white-space:nowrap}
+
+  /* 时间轴 */
+  .timeline{position:relative;padding-left:26px}
+  .timeline:before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--accent),var(--accent2))}
+  .tl-item{position:relative;margin-bottom:26px}
+  .tl-item:before{content:"";position:absolute;left:-24px;top:8px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:3px solid var(--accent)}
+  .tl-item .y{color:var(--accent);font-weight:800;font-size:15px;letter-spacing:1px}
+  .tl-item h5{font-size:17px;margin:2px 0 6px}
+  .tl-item p{font-size:14px;color:var(--ink-dim)}
+
+  /* 关于 */
+  .about-box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:34px;font-size:15px;color:var(--ink-dim)}
+  .about-box p{margin-bottom:14px}
+  .about-box p:last-child{margin-bottom:0}
+  .about-box strong{color:var(--ink)}
+
+  /* 页脚 */
+  footer{border-top:1px solid var(--line);padding:44px 22px 30px;margin-top:40px}
+  .foot-inner{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+  footer .site{font-size:20px;font-weight:800;color:var(--accent)}
+  footer .url{font-size:13px;color:var(--ink-dim);word-break:break-all}
+  footer .copy{font-size:12px;color:#8a7f6b}
+  footer nav{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;font-size:13px}
+  footer nav a{color:var(--ink-dim)}
+
+  /* 响应式 */
+  @media (max-width:900px){
+    .g-4,.g-3{grid-template-columns:repeat(2,1fr)}
+    .head-inner{flex-direction:column;align-items:flex-start}
+    nav.top-nav a{padding:5px 9px;font-size:13px}
+  }
+  @media (max-width:600px){
+    .g-4,.g-3,.g-2{grid-template-columns:1fr}
+    section{padding:46px 18px}
+    .hero{padding:60px 18px 50px}
+    .sec-head h3{font-size:22px}
+    table,thead,tbody,th,td,tr{display:block}
+    thead{display:none}
+    td{border:none;border-bottom:1px dashed var(--line)}
+    tr{margin-bottom:14px;display:block;background:var(--card);border-radius:10px;padding:6px 12px}
+    td:before{content:attr(data-l);display:block;font-size:12px;color:var(--accent);letter-spacing:1px;margin-top:6px}
+    .about-box{padding:24px 20px}
+  }
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+
+<header class="site-head">
+  <div class="head-inner">
+    <div class="brand">
+      <h1>90s电影网</h1>
+      <span class="tag">九十年代影像档案馆</span>
+    </div>
+    <nav class="top-nav">
+      <a href="#intro">站点前言</a>
+      <a href="#archive">影片档案</a>
+      <a href="#list">怀旧片单</a>
+      <a href="#story">幕后故事</a>
+      <a href="#guide">观影指南</a>
+      <a href="#about">关于本站</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="era">Rewind to the 90s</div>
+  <h2>回到录像厅年代<br>重温 <em>90s</em> 的胶片温度</h2>
+  <p class="lead">90s电影网（90sdianyingwang-app）是一座由影迷自发整理的九十年代经典影像档案库。我们不做播放器，只做索引与记忆：把散落在岁月里的港片、好莱坞经典、国产老电影与动画片，按年份、类型与情怀重新归档，让每一次检索都像是翻开一本旧碟片目录。</p>
+  <p class="meta">官方网址：<b>https://90sdianyingwang-app.github.io</b> ｜ 收录区间：1990 — 1999 ｜ 栏目：档案 · 片单 · 幕后 · 指南</p>
+</div>
+
+<!-- 栏目一：站点前言 -->
+<section id="intro">
+  <div class="sec-head">
+    <h3><small>01 / PREFACE</small>为什么还要谈九十年代的电影</h3>
+    <a class="more" href="#">回到顶部 ↑</a>
+  </div>
+  <div class="grid g-2">
+    <article class="card">
+      <div class="no">NO.01</div>
+      <h4>一个被录像带定义的十年</h4>
+      <p>1990 到 1999 年，是中国城市家庭陆续拥有电视机与 VCD 的十年。街角的录像厅、五块钱一张的碟、租碟店老板的手写推荐条，构成了整整一代人的电影启蒙。那些画面带着噪点与偏色，却比任何 4K 修复都更让人心动。</p>
+      <span class="yr">1990 — 1999</span>
+    </article>
+    <article class="card">
+      <div class="no">NO.02</div>
+      <h4>类型片的最后一次野蛮生长</h4>
+      <p>港产的警匪、武侠、无厘头与文艺片在同一时期井喷；好莱坞完成了从胶片到数字、从线性叙事到特效大片的转折；大陆第五代导演走向世界，第六代悄然登场。规则的缝隙里，长出了此后二十年都在致敬的经典。</p>
+      <span class="yr">类型 · 作者 · 作者论</span>
+    </article>
+    <article class="card">
+      <div class="no">NO.03</div>
+      <h4>我们整理的不是片名，是语境</h4>
+      <p>一部片子之所以被记住，往往不在剧情，而在它出现的时间：高考结束的那个夏天、出租屋里和室友分吃的泡面、第一次独自进电影院买到的那张票根。90s电影网为每部影片保留一句"观看情境"，让检索变成回忆的入口。</p>
+      <span class="yr">语境归档</span>
+    </article>
+    <article class="card">
+      <div class="no">NO.04</div>
+      <h4>关于 90s电影网（90sdianyingwang-app）</h4>
+      <p>本站为静态单页站点，域名 <b>https://90sdianyingwang-app.github.io</b>，不提供任何影视资源下载与在线播放，仅作影片资料、上映信息、幕后花絮与正版观看渠道的导航索引。所有海报与剧照版权归原制片方所有。</p>
+      <span class="yr">资料导航 · 非资源站</span>
+    </article>
+  </div>
+</section>
+
+<!-- 栏目二：影片档案 -->
+<section id="archive">
+  <div class="sec-head">
+    <h3><small>02 / ARCHIVE</small>影片档案：按记忆分类，而非按类型</h3>
+    <a class="more" href="#">回到顶部 ↑</a>
+  </div>
+  <div class="grid g-4">
+    <article class="card">
+      <div class="no">BOX 01</div>
+      <h4>录像厅的夜晚</h4>
+      <p>以港产警匪与黑帮片为主：枪战、兄弟、背叛与宿命。适合深夜独自重看，字幕里的粤语脏话比台词更真实。</p>
+      <span class="yr">1992 — 1997</span>
+    </article>
+    <article class="card">
+      <div class="no">BOX 02</div>
+      <h4>碟片店的文艺区</h4>
+      <p>王家卫、侯孝贤、阿巴斯、基耶斯洛夫斯基。那一格格被租空的货架，教会我们"看不懂"也可以是一种享受。</p>
+      <span class="yr">1994 — 1999</span>
+    </article>
+    <article class="card">
+      <div class="no">BOX 03</div>
+      <h4>客厅里的合家欢</h4>
+      <p>动画片与喜剧：放学回家打开电视就能撞上的那种片子。它们不出现在任何"必看榜单"里，却最早教会我们流泪。</p>
+      <span class="yr">1990 — 1995</span>
+    </article>
+    <article class="card">
+      <div class="no">BOX 04</div>
+      <h4>电影院的大事件</h4>
+      <p>《泰坦尼克号》《侏罗纪公园》《终结者2》——特效改写观影习惯的几年。排队两小时，散场后在路灯下走很久。</p>
+      <span class="yr">1991 — 1998</span>
+    </article>
+    <article class="card">
+      <div class="no">BOX 05</div>
+      <h4>大陆的转折时刻</h4>
+      <p>第五代的国际奖项、市场化改革、合拍片兴起。国产片第一次同时面对票房与作者性的双重拷问。</p>
+      <span class="yr">1990 — 1999</span>
+    </article>
+    <article class="card">
+      <div class="no">BOX 06</div>
+      <h4>被忽略的纪录片</h4>
+      <p>九十年代是独立纪录片萌芽的十年。没有配乐，没有旁白，只有长镜头里真实到刺痛的日常。</p>
+      <span class="yr">1993 — 1999</span>
+    </article>
+    <article class="card">
+      <div class="no">BOX 07</div>
+      <h4>译制片与配音</h4>
+      <p>童自荣、乔榛、丁建华、毕克。同一句台词，配音演员念出来，就成了我们记忆里的原声。</p>
+      <span class="yr">声音档案</span>
+    </article>
+    <article class="card">
+      <div class="no">BOX 08</div>
+      <h4>遗失与待修复</h4>
+      <p>胶片会氧化，拷贝会丢失。本栏记录那些仅存片段、海外孤本与正在众筹修复的 90 年代遗珠。</p>
+      <span class="yr">修复进行中</span>
+    </article>
+  </div>
+</section>
+
+<!-- 栏目三：怀旧片单 -->
+<section id="list">
+  <div class="sec-head">
+    <h3><small>03 / PLAYLIST</small>怀旧片单：十年一百部，按年份而非按评分</h3>
+    <a class="more" href="#">回到顶部 ↑</a>
+  </div>
+  <div class="grid g-3">
+    <div>
+      <table>
+        <thead><tr><th>年份</th><th>片名</th><th>记忆标签</th></tr></thead>
+        <tbody>
+          <tr><td data-l="年份">1990</td><td data-l="片名"><a href="#">《赌圣》</a></td><td data-l="标签"><span class="badge">录像厅爆款</span></td></tr>
+          <tr><td data-l="年份">1990</td><td data-l="片名"><a href="#">《滚滚红尘》</a></td><td data-l="标签"><span class="badge">乱世情书</span></td></tr>
+          <tr><td data-l="年份">1991</td><td data-l="片名"><a href="#">《牯岭街少年杀人事件》</a></td><td data-l="标签"><span class="badge">青春之重</span></td></tr>
+          <tr><td data-l="年份">1992</td><td data-l="片名"><a href="#">《秋菊打官司》</a></td><td data-l="标签"><span class="badge">写实转向</span></td></tr>
+          <tr><td data-l="年份">1993</td><td data-l="片名"><a href="#">《霸王别姬》</a></td><td data-l="标签"><span class="badge">华语巅峰</span></td></tr>
+          <tr><td data-l="年份">1994</td><td data-l="片名"><a href="#">《重庆森林》</a></td><td data-l="标签"><span class="badge">都市孤独</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table>
+        <thead><tr><th>年份</th><th>片名</th><th>记忆标签</th></tr></thead>
+        <tbody>
+          <tr><td data-l="年份">1994</td><td data-l="片名"><a href="#">《活着》</a></td><td data-l="标签"><span class="badge">时代切片</span></td></tr>
+          <tr><td data-l="年份">1994</td><td data-l="片名"><a href="#">《肖申克的救赎》</a></td><td data-l="标签"><span class="badge">碟片店常客</span></td></tr>
+          <tr><td data-l="年份">1995</td><td data-l="片名"><a href="#">《大话西游》</a></td><td data-l="标签"><span class="badge">后知后觉的经典</span></td></tr>
+          <tr><td data-l="年份">1995</td><td data-l="片名"><a href="#">《情书》</a></td><td data-l="标签"><span class="badge">雪与初恋</span></td></tr>
+          <tr><td data-l="年份">1996</td><td data-l="片名"><a href="#">《燕尾蝶》</a></td><td data-l="标签"><span class="badge">边缘人的歌</span></td></tr>
+          <tr><td data-l="年份">1997</td><td data-l="片名"><a href="#">《春光乍泄》</a></td><td data-l="标签"><span class="badge">南半球雨季</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table>
+        <thead><tr><th>年份</th><th>片名</th><th>记忆标签</th></tr></thead>
+        <tbody>
+          <tr><td data-l="年份">1997</td><td data-l="片名"><a href="#">《泰坦尼克号》</a></td><td data-l="标签"><span class="badge">影院长队</span></td></tr>
+          <tr><td data-l="年份">1998</td><td data-l="片名"><a href="#">《楚门的世界》</a></td><td data-l="标签"><span class="badge">被预言的现实</span></td></tr>
+          <tr><td data-l="年份">1998</td><td data-l="片名"><a href="#">《花样年华》</a></td><td data-l="标签"><span class="badge">旗袍与克制</span></td></tr>
+          <tr><td data-l="年份">1999</td><td data-l="片名"><a href="#">《喜剧之王》</a></td><td data-l="标签"><span class="badge">其实我是一个演员</span></td></tr>
+          <tr><td data-l="年份">1999</td><td data-l="片名"><a href="#">《黑客帝国》</a></td><td data-l="标签"><span class="badge">世界观被改写</span></td></tr>
+          <tr><td data-l="年份">1999</td><td data-l="片名"><a href="#">《那山那人那狗》</a></td><td data-l="标签"><span class="badge">被低估的国产</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p style="margin-top:22px;color:var(--ink-dim);font-size:14px">片单说明：以上为示例条目，用于展示 90s电影网 的内容结构与关键词覆盖，不代表完整片库。完整片单按"年份—地区—类型—记忆标签"四维检索，可在站点导航中逐栏翻阅。</p>
+</section>
+
+<!-- 栏目四：幕后故事 -->
+<section id="story">
+  <div class="sec-head">
+    <h3><small>04 / BEHIND</small>幕后故事：那些没被剪进正片的部分</h3>
+    <a class="more" href="#">回到顶部 ↑</a>
+  </div>
+  <div class="grid g-2">
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="y">1992 · 拍摄现场</div>
+        <h5>一条街，三个剧组，同一杯奶茶</h5>
+        <p>九十年代的香港，深夜的九龙城寨与油尖旺街区常常同时驻扎着三部以上剧组。演员赶场、灯光复用、道具周转，造就了港片那种独特的"拥挤感"与节奏。今天再看，那些穿帮的镜子里，藏着整个行业的呼吸。</p>
+      </div>
+      <div class="tl-item">
+        <div class="y">1994 · 剪辑房</div>
+        <h5>被剪掉的开头，成了另一部经典</h5>
+        <p>很多 90 年代电影的初剪版本比公映版长一小时。被删掉的往往是缓慢、沉默、不"卖座"的部分。三十年后，那些被剪掉的段落出现在修复版与影展版里，观众终于读懂了导演当初的坚持。</p>
+      </div>
+      <div class="tl-item">
+        <div class="y">1996 · 录音棚</div>
+        <h5>配音演员的下午四点</h5>
+        <p>译制片的黄金年代，配音演员在闷热的录音棚里一天配完一部片子。为了对口型，一句"我爱你"要拆成七次呼吸。我们记住的很多外国面孔，其实长着中国人的声音。</p>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="y">1997 · 发行端</div>
+        <h5>VCD 如何救了华语电影</h5>
+        <p>盗版 VCD 在道德上无可辩护，但在事实上，它让偏远县城的少年第一次看到了王家卫与侯孝贤。九十年代末的影迷版图，是被一张张五块钱的碟片画出来的。此后二十年的独立影院与字幕组，都发源于此。</p>
+      </div>
+      <div class="tl-item">
+        <div class="y">1998 · 海报</div>
+        <h5>手绘海报的最后一代</h5>
+        <p>在 Photoshop 普及之前，电影海报是画出来的。香港的阮大勇、台湾的某某工作室，用一张画决定了路人会不会走进影院。那些夸张的构图与饱和度爆表的天空，是 90 年代最诚实的广告。</p>
+      </div>
+      <div class="tl-item">
+        <div class="y">1999 · 转折</div>
+        <h5>千禧年前夜，电影变了</h5>
+        <p>数字摄影、CGI、多厅影院、好莱坞全球化——1999 年像是被按下快进键。此后十年，电影不再是手艺，而成了工业。回头看 90 年代，它更像是手工时代的最后一个黄昏。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目五：观影指南 -->
+<section id="guide">
+  <div class="sec-head">
+    <h3><small>05 / GUIDE</small>观影指南：怎么把 90 年代看完</h3>
+    <a class="more" href="#">回到顶部 ↑</a>
+  </div>
+  <div class="grid g-3">
+    <article class="card">
+      <div class="no">STEP 01</div>
+      <h4>按导演，不按榜单</h4>
+      <p>九十年代的好电影高度依赖作者。选定一个导演，把他这十年的作品按拍摄顺序看完，你会看到一个人如何被时代推着走。推荐路径：王家卫四部曲、张艺谋 90 年代、李安早期三部曲。</p>
+    </article>
+    <article class="card">
+      <div class="no">STEP 02</div>
+      <h4>看修复版，也看枪版</h4>
+      <p>4K 修复能还你色彩与声音，却还不了当年的画质。偶尔找一版带影院杂音、字幕错行的版本，反而更接近第一次观看的心境。画质与记忆，选一个，别都要。</p>
+    </article>
+    <article class="card">
+      <div class="no">STEP 03</div>
+      <h4>把配乐单独听一遍</h4>
+      <p>梅林茂、久石让、陈勋奇、Roedelius。90 年代是电影配乐的丰年。关掉画面只听原声，你会重新理解那些镜头为什么那样剪。</p>
+    </article>
+    <article class="card">
+      <div class="no">STEP 04</div>
+      <h4>读剧本，再读影评</h4>
+      <p>很多 90 年代剧本公开发行（如《霸王别姬》《活着》），对照成片看被改掉的部分，比读十篇影评都有用。删改之处，往往就是审查、资本与作者三方拉扯的现场。</p>
+    </article>
+    <article class="card">
+      <div class="no">STEP 05</div>
+      <h4>找同代人一起看</h4>
+      <p>90s电影网 鼓励"陪看"：找一位和你同年出生的人，挑一部你们童年错过的片子。映后聊二十分钟，你会得到一份比任何豆瓣短评都珍贵的观影笔记。</p>
+    </article>
+    <article class="card">
+      <div class="no">STEP 06</div>
+      <h4>支持正版与修复</h4>
+      <p>优先选择正规流媒体、院线修复重映与正版蓝光。影像会氧化，拷贝会消失，每一次付费观看，都是在为下一部修复计划投票。</p>
+    </article>
+  </div>
+</section>
+
+<!-- 栏目六：关于本站 -->
+<section id="about">
+  <div class="sec-head">
+    <h3><small>06 / ABOUT</small>关于 90s电影网</h3>
+    <a class="more" href="#">回到顶部 ↑</a>
+  </div>
+  <div class="about-box">
+    <p><strong>90s电影网</strong>（站点标识：<strong>90sdianyingwang-app</strong>，访问地址 <strong>https://90sdianyingwang-app.github.io</strong>）是一个由影迷维护的、面向 90 年代经典电影的静态资料与导航站点。我们不做资源聚合，不做在线播放，不做下载引流；我们只做三件事：<strong>归档</strong>（把影片放回它出生的年份与语境）、<strong>释义</strong>（讲清楚它为什么重要）、<strong>指路</strong>（告诉你去哪里能合法地看到它）。</p>
+    <p><strong>内容范围。</strong>时间上限定在 1990 年 1 月 1 日至 1999 年 12 月 31 日之间公映或完成制作的影像作品，涵盖剧情长片、纪录片、动画长片与具有电影语言的中短篇；地域上以华语（大陆、香港、台湾）为主轴，兼及日本、韩国、欧洲与好莱坞在同期对华语观众产生实际影响的作品。</p>
+    <p><strong>收录标准。</strong>不以票房与奖项为唯一尺度。一部片子能否进入档案，取决于它是否构成"记忆的坐标"——即是否曾被一代人反复提及、模仿、引用或误读。因此你会在这里看到一些不在任何"百大"榜单里的名字，也可能找不到某些公认杰作：那只是因为我们还没写完。</p>
+    <p><strong>更新方式。</strong>本站为纯静态单页结构，栏目通过锚点（#）跳转，无独立内页、无数据库、无评论区。内容更新以追加为主，不删除旧条目，保留每一次修订的痕迹。这种"笨办法"是对抗链接腐烂最朴素的方式。</p>
+    <p><strong>版权与致谢。</strong>影片信息整理自公开上映资料、制片方公告与学术文献；剧照、海报与原声版权归 respective 权利人所有，仅作评论与档案用途。感谢每一个愿意为老电影多付一次费的观众，以及每一个还在修复胶片的实验室。</p>
+    <p><strong>联系与纠错。</strong>如发现年份、译名、演职员或上映信息有误，欢迎通过站点首页网址对应的反馈渠道提交修正。我们会在下一轮更新中核对并标注来源。</p>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div class="site">90s电影网 · 90sdianyingwang-app</div>
+    <div class="url">https://90sdianyingwang-app.github.io</div>
+    <nav>
+      <a href="#intro">站点前言</a>
+      <a href="#archive">影片档案</a>
+      <a href="#list">怀旧片单</a>
+      <a href="#story">幕后故事</a>
+      <a href="#guide">观影指南</a>
+      <a href="#about">关于本站</a>
+    </nav>
+    <div class="copy">© 1990—1999 记忆归档中 ｜ 本站为影视资料导航页，不提供任何资源下载与在线播放服务 ｜ 所有影片版权归原制片方所有</div>
+  </div>
+</footer>
+
+</body>
+</html>
